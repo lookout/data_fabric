@@ -2,7 +2,7 @@ require './lib/data_fabric/version'
 
 Gem::Specification.new do |s|
   s.version = DataFabric::Version::STRING
-  s.name = %q{data_fabric}
+  s.name = %q{lookout-data_fabric}
   s.authors = ["Mike Perham"]
   s.email = %q{mperham@gmail.com}
   s.extra_rdoc_files = [
