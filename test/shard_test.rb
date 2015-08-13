@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class ShardTest < Test::Unit::TestCase
+class ShardTest < MiniTest::Test
 
   def test_activation_should_persist_in_thread
     DataFabric.activate_shard(:city => 'austin')
     assert_equal 'austin', DataFabric.active_shard(:city)
   end
-  
+
   def test_activation_in_one_thread_does_not_change_another
     assert_raises ArgumentError do
        DataFabric.active_shard(:city)
@@ -21,7 +21,7 @@ class ShardTest < Test::Unit::TestCase
       assert_equal 'dallas', DataFabric.active_shard(:city)
     end.join
   end
-  
+
   def test_activations_can_be_nested
     DataFabric.activate_shard(:name => 'Belldandy') do
       DataFabric.activate_shard(:technique => 'Thousand Years of Pain') do
@@ -48,7 +48,7 @@ class ShardTest < Test::Unit::TestCase
       DataFabric.active_shard(:name)
     end
   end
-  
+
   def test_activate_shard_returns_result_of_block
     result = DataFabric.activate_shard(:gundam => 'Exia') do
       1234

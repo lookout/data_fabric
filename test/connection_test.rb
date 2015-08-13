@@ -1,6 +1,4 @@
 require 'test_helper'
-require 'flexmock'
-
 require 'active_record/connection_adapters/mysql2_adapter'
 
 class PrefixModel < ActiveRecord::Base
@@ -56,7 +54,7 @@ class RawConnection
   end
 end
 
-class ConnectionTest < MiniTest::Unit::TestCase
+class ConnectionTest < MiniTest::Test
   include FlexMock::TestCase
 
   def test_should_install_into_arbase

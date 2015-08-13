@@ -1,7 +1,6 @@
 require 'test_helper'
-require 'erb'
 
-class ThreadTest < Test::Unit::TestCase
+class ThreadTest < MiniTest::Test
 
   MUTEX = Mutex.new
 

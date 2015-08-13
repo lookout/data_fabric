@@ -1,13 +1,10 @@
 require 'test_helper'
-require 'flexmock/test_unit'
-require 'erb'
 
 class TheWholeBurrito < ActiveRecord::Base
   data_fabric :prefix => 'fiveruns', :replicated => true, :shard_by => :city
 end
 
-class DatabaseTest < Test::Unit::TestCase
-  
+class DatabaseTest < MiniTest::Test
   def setup
     ActiveRecord::Base.configurations = load_database_yml
     DataFabric::ConnectionProxy.shard_pools.clear

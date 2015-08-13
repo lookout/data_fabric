@@ -13,7 +13,7 @@ task :clean do
   rm_f Dir['test/*.db']
   rm_rf 'coverage'
 
-  puts `cd example23 ; rake app:clean`
+  puts `cd example30 ; rake app:clean`
 end
 
 task :default => :test
@@ -61,11 +61,11 @@ end
 
 def setup(create = false)
   setup_connection
-  
+
   ActiveRecord::Base.configurations.each_pair do |identifier, config|
     using_connection(identifier) do
       send("create_#{config['adapter']}", create, config['database'])
-    end  
+    end
   end
 end
 
@@ -90,29 +90,4 @@ def create_mysql(create, db_name)
   execute "insert into enchiladas (id, name) values (1, '#{db_name}')"
   execute "create table the_whole_burritos (id integer not null auto_increment, name varchar(30) not null, primary key(id))"
   execute "insert into the_whole_burritos (id, name) values (1, '#{db_name}')"
-end
-
-# Test coverage
-begin
-  gem 'rcov' rescue nil
-  require 'rcov/rcovtask'
-
-  desc "Generate coverage numbers for all locally installed versions of ActiveRecord"
-  task :cover_all do
-    Gem.source_index.search(Gem::Dependency.new('activerecord', '>=2.0')).each do |spec|
-      puts `rake cover AR_VERSION=#{spec.version}`
-    end
-  end
-
-  task :cover => [:pretest, :rcov_impl]
-
-  Rcov::RcovTask.new('rcov_impl') do |t|
-    t.libs << "test"
-    t.test_files = FileList["test/*_test.rb"]
-    t.output_dir = "coverage/#{ENV['AR_VERSION']}"
-    t.verbose = true
-    t.rcov_opts = ['--text-report', '--exclude', "test,Library,#{ENV['GEM_HOME']}", '--sort', 'coverage']
-  end
-rescue LoadError => e
-  puts 'Test coverage support requires \'gem install rcov\''
 end
